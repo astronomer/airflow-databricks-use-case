@@ -1,3 +1,15 @@
+"""
+### Astro Databricks provider and Astro Python SDK - ELT example
+
+This DAG shows a pipeline using both the Astro Databricks provider and the Astro
+Python SDK to:
+- load local files with renewable energy data into a relational database,
+- run a transformation to select information from one country,
+- load the results into an S3 bucket as CSV files,
+- perform transformations on the data using two Databricks notebooks in a DatabricksWorkflowTaskGroup
+- create a visualization of the transformation results to save in a local png.
+"""
+
 from airflow.decorators import dag
 from pendulum import datetime
 from astro import sql as aql
@@ -15,8 +27,9 @@ import matplotlib.pyplot as plt
 # ----------------- #
 
 COUNTRY = "Switzerland"
-DATABRICKS_LOGIN_EMAIL = "tamara.fingerlin@gmail.com"
-S3_BUCKET = "tutorialtjf231942-s3-bucket"
+DATABRICKS_LOGIN_EMAIL = "<your email>"
+S3_BUCKET = "<your S3 bucket>"
+AWS_REGION = "<your AWS region>"
 
 DATABRICKS_NOTEBOOK_NAME_1 = "join_data"
 DATABRICKS_NOTEBOOK_NAME_2 = "transform_data"
@@ -51,7 +64,7 @@ job_cluster_spec = [
             "aws_attributes": {
                 "first_on_demand": 1,
                 "availability": "SPOT_WITH_FALLBACK",
-                "zone_id": "eu-central-1",
+                "zone_id": AWS_REGION,
                 "spot_bid_price_percent": 100,
                 "ebs_volume_count": 0,
             },
