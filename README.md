@@ -1,49 +1,36 @@
-Overview
-========
+Astro Databricks provider tutorial
+==================================
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+This repository contains the DAG code used in the Astronomer Learn tutorial [Orchestrate Databricks jobs with Airflow](https://docs.astronomer.io/learn/airflow-databricks). The DAG uses both the Astro Databricks provider as well as the Astro Python SDK.
 
-Project Contents
-================
+# How to use this repository
 
-Your Astro project contains the following files and folders:
+This section explains how to run this repository with Airflow. Note that you will need to define extra connections (AWS, Databricks and a connection to a relational database). See the tutorial  for instructions. The code used in the Databricks notebooks is available in the `databricks_notebook_code` folder.
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes two example DAGs:
-    - `example_dag_basic`: This DAG shows a simple ETL data pipeline example with three TaskFlow API tasks that run daily.
-    - `example_dag_advanced`: This advanced DAG showcases a variety of Airflow features like branching, Jinja templates, task groups and several Airflow operators.
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+## Option 1: Use GitHub Codespaces
 
-Deploy Your Project Locally
-===========================
+Run this Airflow project without installing anything locally.
 
-1. Start Airflow on your local machine by running 'astro dev start'.
+1. Fork this repository.
+2. Create a new GitHub codespaces project on your fork. Make sure it uses at least 4 cores!
+3. After creating the codespaces project the Astro CLI will automatically start up all necessary Airflow components. This can take a few minutes. 
+4. Once the Airflow project has started, access the Airflow UI by clicking on the **Ports** tab and opening the forward URL for port 8080.
 
-This command will spin up 4 Docker containers on your machine, each for a different Airflow component:
+## Option 2: Use the Astro CLI
 
-- Postgres: Airflow's Metadata Database
-- Webserver: The Airflow component responsible for rendering the Airflow UI
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- Triggerer: The Airflow component responsible for triggering deferred tasks
+Download the [Astro CLI](https://docs.astronomer.io/astro/cli/install-cli) to run Airflow locally in Docker. `astro` is the only package you will need to install.
 
-2. Verify that all 4 Docker containers were created by running 'docker ps'.
+1. Run `git clone https://github.com/astronomer/2-6-example-dags.git` on your computer to create a local clone of this repository.
+2. Install the Astro CLI by following the steps in the [Astro CLI documentation](https://docs.astronomer.io/astro/cli/install-cli). Docker Desktop/Docker Engine is a prerequisite, but you don't need in-depth Docker knowledge to run Airflow with the Astro CLI.
+3. Run `astro dev start` in your cloned repository.
+4. After your Astro project has started. View the Airflow UI at `localhost:8080`.
 
-Note: Running 'astro dev start' will start your project with the Airflow Webserver exposed at port 8080 and Postgres exposed at port 5432. If you already have either of those ports allocated, you can either stop your existing Docker containers or change the port.
+## Resources
 
-3. Access the Airflow UI for your local Airflow project. To do so, go to http://localhost:8080/ and log in with 'admin' for both your Username and Password.
-
-You should also be able to access your Postgres Database at 'localhost:5432/postgres'.
-
-Deploy Your Project to Astronomer
-=================================
-
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://docs.astronomer.io/cloud/deploy-code/
-
-Contact
-=======
-
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+- [Orchestrate Databricks jobs with Airflow tutorial](https://docs.astronomer.io/learn/airflow-databricks).
+- [Databricks 14 day free trial](https://www.databricks.com/try-databricks).
+- [Astro Databricks provider repository](https://github.com/astronomer/astro-provider-databricks/).
+- [Astro Databricks provider documentation](https://astronomer.github.io/astro-provider-databricks/).
+- [Astro Python SDK tutorial](https://docs.astronomer.io/learn/astro-python-sdk).
+- [Astro Python SDK documentation](https://astro-sdk-python.readthedocs.io/en/stable/index.html).
+- [Astro Python SDK repository](https://github.com/astronomer/astro-sdk).
