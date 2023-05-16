@@ -26,10 +26,10 @@ import matplotlib.pyplot as plt
 # Setting variables #
 # ----------------- #
 
-COUNTRY = "Switzerland"
+COUNTRY = "United States"
 DATABRICKS_LOGIN_EMAIL = "<your email>"
-S3_BUCKET = "<your S3 bucket>"
-AWS_REGION = "<your AWS region>"
+S3_BUCKET = "<your bucket>"
+AWS_REGION = "<your region>"
 
 DATABRICKS_NOTEBOOK_NAME_1 = "join_data"
 DATABRICKS_NOTEBOOK_NAME_2 = "transform_data"
@@ -91,7 +91,7 @@ def select_countries(in_table, country):
 def create_graph(df: pd.DataFrame):
     sns.set_style("whitegrid")
     sns.lineplot(x="Year", y="SHW%", data=df)
-    plt.title(f"% of Solar, Hydro and Wind in {COUNTRY}")
+    plt.title(f"% of Solar, Hydro and Wind in the {COUNTRY}")
     plt.xlabel("Year")
     plt.ylabel("Combined SHW (in %)")
     plt.savefig("include/shw.png")

@@ -16,7 +16,7 @@ from pyspark.sql.types import (
 # set variables
 ACCESS_KEY = "<your AWS Access Key ID>"  # dbutils.secrets.get(scope="my-scope", key="my-aws-key-key")
 SECRET_KEY = "<your AWS Secret Access Key>"  # dbutils.secrets.get(scope="my-scope", key="my-aws-secret-key")
-BUCKET_NAME = "databricks-tutorial-bucket"
+BUCKET_NAME = "<your bucket>"
 S3_FOLDER_COUNTRY_SUBSET = "country_subset"
 S3_FOLDER_JOINED_DATA = "joined_data"
 
