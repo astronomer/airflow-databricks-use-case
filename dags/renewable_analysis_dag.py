@@ -82,6 +82,7 @@ job_cluster_spec = [
 # Astro SDK transformations  #
 # -------------------------- #
 
+
 @aql.transform
 def select_countries(in_table, country):
     return """SELECT * FROM {{ in_table }} WHERE "Entity" = {{ country }}"""
@@ -96,9 +97,11 @@ def create_graph(df: pd.DataFrame):
     plt.ylabel("Combined SHW (in %)")
     plt.savefig("include/shw.png")
 
+
 # --- #
 # DAG #
 # --- #
+
 
 @dag(start_date=datetime(2023, 1, 1), schedule=None, catchup=False)
 def renewable_analysis_dag():
@@ -174,7 +177,7 @@ def renewable_analysis_dag():
         aws_conn_id=AWS_CONN_ID,
     )
 
-    # load CSV file containing the result from the transformation in the 
+    # load CSV file containing the result from the transformation in the
     # Databricks job into the relational databse
     load_file_to_db = aql.load_file(
         input_file=File(path=DATABRICKS_RESULT_FILE_PATH, conn_id=AWS_CONN_ID),
@@ -185,7 +188,7 @@ def renewable_analysis_dag():
         save_files_to_S3
         >> task_group
         >> [load_file_to_db, delete_intake_files_S3]
-        >> create_graph(load_file_to_db) # use the Astro SDK to graph the results
+        >> create_graph(load_file_to_db)  # use the Astro SDK to graph the results
     )
 
     # cleanup temporary tables in the relational database
