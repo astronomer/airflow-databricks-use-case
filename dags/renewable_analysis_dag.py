@@ -178,7 +178,7 @@ def renewable_analysis_dag():
     )
 
     # load CSV file containing the result from the transformation in the
-    # Databricks job into the relational databse
+    # Databricks job into the relational database
     load_file_to_db = aql.load_file(
         input_file=File(path=DATABRICKS_RESULT_FILE_PATH, conn_id=AWS_CONN_ID),
         output_table=Table(conn_id=DB_CONN_ID),
