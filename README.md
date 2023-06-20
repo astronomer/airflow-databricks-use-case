@@ -1,11 +1,11 @@
 Astro Databricks provider tutorial
 ==================================
 
-This repository contains the DAG code used in the Astronomer Learn tutorial [Orchestrate Databricks jobs with Airflow](https://docs.astronomer.io/learn/airflow-databricks). The DAG uses both the Astro Databricks provider as well as the Astro Python SDK.
+This repository contains the DAG code used in the [Astronomer Databricks use case example](https://docs.astronomer.io/learn/use-case-airflow-databricks). The DAG uses both the Astro Databricks provider as well as the Astro Python SDK.
 
 # How to use this repository
 
-This section explains how to run this repository with Airflow. Note that you will need to define extra connections (AWS, Databricks and a connection to a relational database). See the tutorial  for instructions. The code used in the Databricks notebooks is available in the `databricks_notebook_code` folder.
+This section explains how to run this repository with Airflow. Note that you will need to define extra connections (AWS, Databricks and a connection to a relational database). To do so, rename the `.env_example` file to `.env` and add your own credentials. The code used in the Databricks notebooks is available in the `databricks_notebook_code` folder.
 
 ## Option 1: Use GitHub Codespaces
 
