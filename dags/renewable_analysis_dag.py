@@ -27,9 +27,9 @@ import matplotlib.pyplot as plt
 # ----------------- #
 
 COUNTRY = "United States"
-DATABRICKS_LOGIN_EMAIL = "<your email>"
-S3_BUCKET = "<your bucket>"
-AWS_REGION = "<your region>"
+DATABRICKS_LOGIN_EMAIL = "tamara.fingerlin@gmail.com"
+S3_BUCKET = "tutorialtjf231942-s3-bucket"
+AWS_REGION = "eu-central-1"
 
 DATABRICKS_NOTEBOOK_NAME_1 = "join_data"
 DATABRICKS_NOTEBOOK_NAME_2 = "transform_data"
@@ -51,7 +51,7 @@ DATABRICKS_JOB_CLUSTER_KEY = "tutorial-cluster"
 
 DATABRICKS_CONN_ID = "databricks_conn"
 AWS_CONN_ID = "aws_conn"
-DB_CONN_ID = "postgres_conn"
+DB_CONN_ID = "db_conn"
 
 S3_FOLDER_COUNTRY_SUBSET = "country_subset"
 
@@ -109,21 +109,32 @@ def renewable_analysis_dag():
     # by using dynamic task mapping over the LoadFileOperator
     in_tables = aql.LoadFileOperator.partial(
         task_id="in_tables",
-        output_table=Table(
-            conn_id=DB_CONN_ID,
-        ),
-    ).expand(
-        input_file=[
-            File(path=SOLAR_CSV_PATH),
-            File(path=HYDRO_CSV_PATH),
-            File(path=WIND_CSV_PATH),
+    ).expand_kwargs(
+        [
+            {
+                "input_file": File(path=SOLAR_CSV_PATH),
+                "output_table": Table(conn_id=DB_CONN_ID, name="solar"),
+            },
+            {
+                "input_file": File(path=HYDRO_CSV_PATH),
+                "output_table": Table(conn_id=DB_CONN_ID, name="hydro"),
+            },
+            {
+                "input_file": File(path=WIND_CSV_PATH),
+                "output_table": Table(conn_id=DB_CONN_ID, name="wind"),
+            },
         ]
     )
 
     # select the data from `COUNTRY` for each temporary table, store in
     # another temporary table
-    country_tables = select_countries.partial(country=COUNTRY).expand(
-        in_table=in_tables.output
+    country_tables = select_countries.partial(country=COUNTRY).expand_kwargs(
+        in_tables.output.map(
+            lambda x: {
+                "in_table": x,
+                "output_table": Table(conn_id=DB_CONN_ID, name=f"{x.name}_country"),
+            }
+        )
     )
 
     # export the information from each temporary table into a CSV file in S3
