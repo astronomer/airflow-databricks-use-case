@@ -27,9 +27,9 @@ import matplotlib.pyplot as plt
 # ----------------- #
 
 COUNTRY = "United States"
-DATABRICKS_LOGIN_EMAIL = "tamara.fingerlin@gmail.com"
-S3_BUCKET = "tutorialtjf231942-s3-bucket"
-AWS_REGION = "eu-central-1"
+DATABRICKS_LOGIN_EMAIL = "<your-databricks-login-email>"
+S3_BUCKET = "<your-s3-bucket-name>"
+AWS_REGION = "<your-aws-region>"
 
 DATABRICKS_NOTEBOOK_NAME_1 = "join_data"
 DATABRICKS_NOTEBOOK_NAME_2 = "transform_data"
